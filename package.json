@@ -1,0 +1,22 @@
+{
+  "name": "inspirebot",
+  "version": "1.0.0",
+  "description": "Fetches inspiring quotes and shares them through Discord",
+  "keywords": [
+    "quotes", "inspiration", "discord"
+  ],
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": {
+    "name": "Harley Grace",
+    "email": "ambiguousscripting@gmail.com",
+    "url": "https://github.com/ambiscript"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^11.4.2",
+    "rss-parser": "^3.6.0"
+  }
+}
