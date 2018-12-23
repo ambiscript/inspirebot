@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Fetches inspiring quotes and shares them through Discord",
   "keywords": [
-    "quotes", "inspiration", "discord"
+    "quotes",
+    "inspiration",
+    "discord"
   ],
   "main": "app.js",
   "scripts": {
@@ -16,7 +18,9 @@
   },
   "license": "MIT",
   "dependencies": {
+    "better-sqlite3": "^5.2.1",
     "discord.js": "^11.4.2",
+    "node-cron": "^2.0.3",
     "rss-parser": "^3.6.0"
   }
 }
