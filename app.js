@@ -12,16 +12,16 @@ const cron = require('node-cron');
 const fs = require('fs');
 
 // Import custom config json file
-const config = require('./config.json');
+const config = require('./config.js');
 
 
 // Parses BrainyQuote RSS for daily quotes
 var fetchQuote = new Promise(function(resolve, reject) {
-    let quote = '__**Today\s quotes**__';
+    let quote = '__**Today\'s quotes**__\n';
     parser.parseURL('https://www.brainyquote.com/link/quotebr.rss', function(err, feed) {
 
         feed.items.forEach(function(entry) {
-            quote += `${entry.title}: ${entry.content}\n`;
+            quote += `**${entry.title}** - _${entry.content}_\n`;
         });
 
         resolve(quote);
@@ -50,12 +50,10 @@ client.on('ready', function() {
     let schedule = cron.schedule('0 12 * * *', function() {
         fetchQuote.then(function(quotes) {
             client.guilds.forEach(function(guild) {
-                console.log(guild);
                 let server = client.getServer.get(guild.id);
                 if (!server) return;
 
                 client.channels.get(server.channel).send(quotes);
-                console.log(server.guild);
             })
         }), {
             scheduled: true,
@@ -100,9 +98,13 @@ client.on('message', function(message) {
         }
     }
 
-    // Returns 'Pong!', used to determine online status
+    // Sends 'Pong!' to Discord, then edits message to display delay in milliseconds
     if (command === 'ping') {
-        message.channel.send('Pong!')
+        message.channel.send('Pong!').then(function(pong) {
+            let delay = Math.abs(pong.createdAt - message.createdAt);
+
+            pong.edit(pong.content + ` | delay: ${delay} ms`);
+        });
     }
 
     // Fetches brainyquote.com daily quotes and sends them in one message to Discord
